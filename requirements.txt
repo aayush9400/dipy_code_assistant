@@ -23,3 +23,4 @@ langchain_google_genai
 bs4
 matplotlib
 tqdm
+#!CMAKE_ARGS="-DLLAMA_METAL=on" FORCE_CMAKE=1 pip install -U llama-cpp-python --no-cache-dir
