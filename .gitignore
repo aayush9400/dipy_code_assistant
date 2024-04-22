@@ -1,0 +1,9 @@
+# Ignore environment files
+.env
+# Except the sample environment file
+!sample.env
+
+llm_env/
+model/codellama-13b-instruct.Q4_K_M.gguf
+
+/llama.cpp
