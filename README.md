@@ -121,16 +121,6 @@ Contributions are welcome! Please feel free to submit a pull request or open an 
 
 This project is licensed under the MIT License. See the [MIT License](LICENSE) file for more details.
 
-
-
-## Acknowledgments
-
-- The DIPY development team for their extensive documentation and support.
-- The Langchain Community for their powerful tools and libraries.
-- The OpenAI community for continuous support and development of state-of-the-art models.
-- The contributors and maintainers of the open-source projects used in this tool.
-- The users and testers who provided valuable feedback and suggestions.
-
 ## Contact
 
 For any queries or support, please reach out to [Aayush Jaiswal](https://linkedin.com/in/jaiswal-aayush).
