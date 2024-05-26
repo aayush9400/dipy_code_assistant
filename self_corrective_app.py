@@ -2,13 +2,14 @@ import pprint
 import streamlit as st
 from dotenv import load_dotenv
 
-from langchain.callbacks.manager import CallbackManager
-from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
-from langchain.prompts import PromptTemplate
-from langchain_community.llms import LlamaCpp
-from langchain.chains.question_answering import load_qa_chain
-from langchain_community.vectorstores import DeepLake
 from langchain_community.embeddings import LlamaCppEmbeddings
+from langchain_community.vectorstores import DeepLake
+from langchain_community.llms import LlamaCpp
+
+from langchain_core.callbacks import CallbackManager, StreamingStdOutCallbackHandler
+from langchain_core.prompts import PromptTemplate
+
+from langchain.chains.question_answering import load_qa_chain
 
 from self_corrective_utils import retrieve, grade_documents, generate, transform_query, web_search, decide_to_generate
 from self_corrective_utils import GraphState
@@ -24,7 +25,7 @@ def load_model():
     llm = LlamaCpp(
         model_path="model\codellama-13b-instruct.Q4_K_M.gguf",
         n_ctx=5000,
-        n_gpu_layers=4,
+        n_gpu_layers=-1,
         n_batch=512,
         f16_kv=True,
         callback_manager=callback_manager,

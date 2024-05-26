@@ -1,7 +1,8 @@
 .env
 !sample.env
 
-/llama.cpp
+/llama-cpp-python
+/converted_codebase
+
 *.gguf
-converted_codebase/
 *.pyc

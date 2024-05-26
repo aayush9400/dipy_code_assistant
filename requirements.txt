@@ -14,12 +14,12 @@ pandas
 langchainhub
 langgraph 
 tavily-python 
-langchain-mistralai 
-gpt4all 
+# langchain-mistralai 
+# gpt4all 
 llama-cpp-python
 python-dotenv
-google-generativeai
-langchain_google_genai
+# google-generativeai
+# langchain_google_genai
 bs4
 matplotlib
 tqdm
