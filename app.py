@@ -8,7 +8,7 @@ from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.prompts import PromptTemplate
 from langchain_community.llms import LlamaCpp
 from langchain.chains.question_answering import load_qa_chain
-from langchain import hub
+from langchain_core.output_parsers import StrOutputParser
 
 # Load environment variables
 load_dotenv()
@@ -36,26 +36,26 @@ def load_retriever(username='aajais'):
     db = DeepLake(dataset_path=f"hub://{username}/dipy-v2", read_only=True, embedding=embeddings)
     retriever = db.as_retriever()
     retriever.search_kwargs['distance_metric'] = 'cos'
-    retriever.search_kwargs['fetch_k'] = 100
-    retriever.search_kwargs['k'] = 8
+    retriever.search_kwargs['fetch_k'] = 50
+    retriever.search_kwargs['k'] = 5
     return retriever
 
 # Define the QA handling function
 def handle_qa(user_input, llm, retriever):
-    docs = retriever.get_relevant_documents(user_input)
-    print(docs)
-    template = """[INST]<<SYS>>Use the following pieces of context to answer the question at the end.
+    docs = retriever.invoke(user_input)
+    # print(docs)
+    prompt = PromptTemplate(
+        template="""[INST]<<SYS>>Use the following pieces of context to answer the question at the end.
         If you don't know the answer, just say that you don't know, don't try to make up an answer.<</SYS>>
         {context}
         Question: {question}[/INST]
-        Helpful Answer:"""
-    QA_CHAIN_PROMPT = PromptTemplate(
-        input_variables=["context", "question"],
-        template=template,
+        Helpful Answer:""",
+        input_variables=["question", "context"],
     )
-    chain = load_qa_chain(llm, chain_type="stuff", prompt=QA_CHAIN_PROMPT)
 
-    output = chain.invoke({"input_documents": docs, "question": user_input}, return_only_outputs=True)
+    chain = prompt | llm | StrOutputParser()
+
+    output = chain.invoke({"context": docs, "question": user_input})
 
     st.write(output)  # or st.text(output) for plain text
 
@@ -81,7 +81,7 @@ if submit_button and user_input:
     
     bot_response = handle_qa(user_input, llm, retriever)
     
-    st.session_state.chat_history.append({"role": "bot", "content": bot_response.output_text})
+    st.session_state.chat_history.append({"role": "bot", "content": bot_response})
 
 for index, chat in enumerate(st.session_state.chat_history):
     role = "You" if chat["role"] == "user" else "Bot"
