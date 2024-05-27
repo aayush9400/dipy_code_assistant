@@ -16,11 +16,11 @@ The DIPY Code Assistant is a comprehensive tool designed to facilitate the extra
 - Python 3.8+
 - Streamlit
 - Langchain Community
-- Matplotlib
 - BeautifulSoup
 - Tiktoken
 - dotenv
 - DeepLake
+- Llama Cpp
 
 ## Installation
 
@@ -40,7 +40,20 @@ The DIPY Code Assistant is a comprehensive tool designed to facilitate the extra
 
     ```bash
     pip install -r requirements.txt
-    Set Up Environment Variables:
+    ```
+    For installing llama with GPU support on Linux follow the below steps:
+    1. Install OpenBLAS
+    ```bash
+    sudo apt-get install openblas-dev
+    ```
+    2. Set environments variables
+    ```bash
+    set CMAKE_ARGS="-DLLAMA_CUBLAS=on"
+    set FORCE_CMAKE=1
+    ```
+    3. Install llama-cpp-python
+    ```bash
+    pip install llama-cpp-python
     ```
 
 4. **Set Up Environment Variables**: \
@@ -52,9 +65,13 @@ The DIPY Code Assistant is a comprehensive tool designed to facilitate the extra
 
 ### Streamlit Application
 
-1. **Run the Streamlit App**:
+1. **a. Run the Streamlit App for Simple RAG based app**:
    ```bash
    streamlit run app.py
+    ```
+    **b. Run the Streamlit App for Self Corrective RAG based app**:
+   ```bash
+   streamlit run self_corrective_app.py
     ```
 2. **Interact with the Application**:
 Open your browser and navigate to the displayed URL (default: http://localhost:8501).
@@ -76,9 +93,11 @@ Enter your queries in the text input box and receive responses from the bot.
 ## Project Structure
 dipy-code-assistant \
 ├── app.py # Streamlit application\
+├── self_correctiv_app.py # Streamlit application for self corrective RAG\
 ├── create_db.py # Script to create the database and retriever \
 ├── preprocess.py # Script to preprocess files and websites \
 ├── utils.py # Utility functions for processing\
+├── self_corrective_utils.py # Utility functions for self corrective RAG app\
 ├── requirements.txt # List of dependencies\
 ├── .env # Environment variables\
 ├── README.md # Project README file\
@@ -112,10 +131,6 @@ dipy-code-assistant \
 - **User Interface Improvements**: Enhance the Streamlit interface for better user experience and accessibility.
 - **Performance Optimization**: Optimize the tool's performance for faster processing and response times.
 - **Detailed Logging and Monitoring**: Implement logging and monitoring features to track the tool's usage and performance metrics.
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a pull request or open an issue on the GitHub repository.
 
 ## License
 

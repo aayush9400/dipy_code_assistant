@@ -1,3 +1,4 @@
+import os
 import pprint
 import streamlit as st
 from dotenv import load_dotenv
@@ -22,8 +23,10 @@ load_dotenv()
 @st.cache_resource
 def load_model():
     callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
+    cwd = os.getcwd()
+    model_path = os.path.join(cwd, "model", "codellama-13b-instruct.Q4_K_M.gguf")
     llm = LlamaCpp(
-        model_path="model\codellama-13b-instruct.Q4_K_M.gguf",
+        model_path=model_path,
         n_ctx=5000,
         n_gpu_layers=-1,
         n_batch=512,
@@ -36,7 +39,8 @@ def load_model():
 # Caching the retriever loader to avoid reloading on every rerun
 @st.cache_resource
 def load_retriever(username='aajais'):
-    embd_model_path = r"model\nomic-embed-text-v1.5.Q5_K_S.gguf"
+    cwd = os.getcwd()
+    embd_model_path = os.path.join(cwd, "model", "nomic-embed-text-v1.5.Q5_K_S.gguf")
     embeddings = LlamaCppEmbeddings(model_path=embd_model_path, n_batch=512)
     db = DeepLake(dataset_path=f"hub://{username}/dipy-v2", read_only=True, embedding=embeddings)
     retriever = db.as_retriever()
