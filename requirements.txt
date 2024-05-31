@@ -5,8 +5,7 @@ scikit-learn
 langchain_community 
 tiktoken 
 langchain-openai 
-langchainhub 
-# chromadb 
+langchainhub  
 langchain-anthropic
 streamlit
 numpy
@@ -14,14 +13,15 @@ pandas
 langchainhub
 langgraph 
 tavily-python 
-# langchain-mistralai 
-# gpt4all 
-# llama-cpp-python
 python-dotenv
-# google-generativeai
-# langchain_google_genai
 bs4
 matplotlib
 tqdm
 deeplake[enterprise]
+llama-cpp-python
+# chromadb
+# langchain-mistralai 
+# gpt4all 
+# google-generativeai
+# langchain_google_genai
 # CMAKE_ARGS="-DLLAMA_CUBLAS=on" FORCE_CMAKE=1 pip install llama-cpp-python
